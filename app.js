@@ -1,5 +1,5 @@
 const phantom = require('phantom');
-const render = require('./renderer');
+const render = require('./lib/renderer');
 
 var sitepage = null;
 var phInstance = null;
