@@ -1,10 +1,10 @@
 # webgrider
 Nodejs module to draw the grid/backbone of any website
 
-##init
+## init
 `npm install`
 
-##use
+## use
 `node app.js <webpage_url>`
 
 
