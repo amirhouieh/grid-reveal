@@ -1,7 +1,7 @@
-import { WebGrider } from "../src";
+import { GridReveal } from "../src";
 
 describe("renderUrl", () => {
-    const grider = new WebGrider();
+    const grider = new GridReveal();
 
     it("initializing browser", async () => {
         await grider.init();

@@ -1,34 +1,34 @@
 import puppeteer, { Browser, EvaluateFn, JSONObject, ScreenshotOptions, Viewport } from "puppeteer";
 import { drawTheGrid } from "./renderer";
 
-export type TWebGridStateOpt = {
+export type TGridRevealStateOpt = {
     busy?: boolean;
 }
 
-export type TWebGridState = {
+export type TGridRevealState = {
     busy: boolean;
 }
 
-export type TWebGridRenderOutput = {
+export type TGridRevealRenderOutput = {
     originalBase64: string;
     gridBase64: string;
     options: {
         viewPort: Viewport,
-        renderOptions: TWebGriderRenderOptions
+        renderOptions: TGridRevealRenderOptions
     };
 }
 
-export type TWebGriderRenderPageOptions = {
+export type TGridRevealRenderPageOptions = {
     viewPort?: Viewport,
-    renderOptions?: TWebGriderRenderOptions
+    renderOptions?: TGridRevealRenderOptions
 }
 
-export interface TWebGriderRenderOptions{
+export interface TGridRevealRenderOptions{
     textLength?: number|null,
     sizeThreshold?: number|null,
 }
 
-const defaultRenderOpt: TWebGriderRenderOptions = {
+const defaultRenderOpt: TGridRevealRenderOptions = {
     textLength: 100,
     sizeThreshold: 0.1
 }
@@ -44,9 +44,9 @@ const defaultScreenshotOptions: ScreenshotOptions = {
     encoding: "base64"
 }
 
-export class WebGrider {
+export class GridReveal {
     browser!: Browser;
-    state: TWebGridState;
+    state: TGridRevealState;
 
     constructor() {
         this.state = {busy: false};
@@ -56,11 +56,11 @@ export class WebGrider {
         this.browser = await puppeteer.launch();
     }
 
-    private setState(state: TWebGridStateOpt){
+    private setState(state: TGridRevealStateOpt){
         this.state = {...this.state, ...state};
     }
 
-    getRenderOptions(opt: TWebGriderRenderOptions = defaultRenderOpt): TWebGriderRenderOptions{
+    getRenderOptions(opt: TGridRevealRenderOptions = defaultRenderOpt): TGridRevealRenderOptions{
         /*Int value, if presents, elements with less text length will be ignored*/
         const textLength = typeof opt.textLength==="undefined"? defaultRenderOpt.textLength: opt.textLength;
 
@@ -76,8 +76,8 @@ export class WebGrider {
 
     async renderPage(
         url: string,
-        options: TWebGriderRenderPageOptions = {}
-    ): Promise<TWebGridRenderOutput> {
+        options: TGridRevealRenderPageOptions = {}
+    ): Promise<TGridRevealRenderOutput> {
 
         //For later in case we want to close browser on idle
         if(!this.browser){
@@ -103,7 +103,7 @@ export class WebGrider {
         const originalBase64 = await page.screenshot(defaultScreenshotOptions);
 
         //drawing the grid
-        await page.evaluate<EvaluateFn<TWebGriderRenderOptions>>(drawTheGrid, renderOpt);
+        await page.evaluate<EvaluateFn<TGridRevealRenderOptions>>(drawTheGrid, renderOpt);
 
         //take the screenshot of the view with the grid
         const gridBase64 = await page.screenshot(defaultScreenshotOptions)
