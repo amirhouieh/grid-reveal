@@ -1,9 +1,9 @@
-import { TWebGriderRenderOptions } from "./index";
+import { TGridRevealRenderOptions } from "./index";
 
 export type TNode =  Node&HTMLElement;
 
 export const drawTheGrid = (
-    args: TWebGriderRenderOptions
+    args: TGridRevealRenderOptions
 ) => {
     const GRID_CLASSNAME = "webgrider_grid";
     const HIDE_CLASSNAME = "webgrider_hide";
