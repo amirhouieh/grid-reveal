@@ -33,7 +33,7 @@ export const drawTheGrid = (
     };
 
      const HIDE_CSS_RULE = {
-        selector: `input,.${HIDE_CLASSNAME},select,body *:before,body *:after`,
+        selector: `input,.${HIDE_CLASSNAME},select,body *:before,body *:after,svg`,
         style: 'opacity: 0 !important;'
     }
 
@@ -42,9 +42,19 @@ export const drawTheGrid = (
         style: RESET_CSS.join(";")+";"
     }
 
-    document.styleSheets[0].addRule(GRID_CSS_RULE.selector, GRID_CSS_RULE.style);
-    document.styleSheets[0].addRule(HIDE_CSS_RULE.selector, HIDE_CSS_RULE.style);
-    document.styleSheets[0].addRule(RESET_CSS_RULE.selector, RESET_CSS_RULE.style);
+    const addRule = (selector: string, style: string) => {
+         try{
+             document.styleSheets[0].addRule(selector, style);
+         }catch (e){
+             const styleSheet = document.createElement('style');
+             document.head.appendChild(styleSheet);
+             styleSheet.textContent = `${selector}{${style}}`;
+         }
+    }
+
+    addRule(GRID_CSS_RULE.selector, GRID_CSS_RULE.style);
+    addRule(HIDE_CSS_RULE.selector, HIDE_CSS_RULE.style);
+    addRule(RESET_CSS_RULE.selector, RESET_CSS_RULE.style);
 
     const isVisibleNode = (node: TNode): number => {
         //@ts-ignore
@@ -84,6 +94,8 @@ export const drawTheGrid = (
                 const wrapper = document.createElement('span');
                 wrapper.className =  HIDE_CLASSNAME;
                 wrapper.appendChild(node.parentNode!.replaceChild(wrapper, node));
+                node.parentElement!.style.opacity = "0";
+                wrapper.style.opacity = "0";
             }
     }
 
@@ -137,6 +149,8 @@ export const drawTheGrid = (
         while (walker.nextNode()) {
             //@ts-ignore
             walker.currentNode.className += ` ${GRID_CLASSNAME}`;
+            //@ts-ignore
+            // walker.currentNode.parentElement.style.border = `3px solid black`;
         }
     }
 

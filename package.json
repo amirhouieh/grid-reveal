@@ -1,6 +1,6 @@
 {
   "name": "grid-reveal",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "amirhouieh",
   "license": "MIT",
   "homepage": "https://github.com/amirhouieh/webgrider",
@@ -17,6 +17,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
+    "sandbox": "ts-node sandbox/sandbox.ts",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
@@ -46,7 +47,10 @@
   ],
   "devDependencies": {
     "@types/jest": "^27.0.2",
-    "tsdx": "^0.7.2"
+    "@types/node": "^16.11.6",
+    "ts-node": "^10.4.0",
+    "tsdx": "^0.7.2",
+    "tslib": "^1.14.1"
   },
   "dependencies": {
     "puppeteer": "^10.4.0"

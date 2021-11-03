@@ -3,3 +3,6 @@
 node_modules
 dist
 .idea
+
+.rts2_cache_esm
+.rts2_cache_cjs
